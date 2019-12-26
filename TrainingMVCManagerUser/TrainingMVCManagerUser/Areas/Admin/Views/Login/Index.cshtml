@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = null;
+}
+@model TrainingMVCManagerUser.Areas.Admin.Models.LoginModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Concept/css/style.css" rel="stylesheet" type="text/css" />
+    <title>Index</title>
+</head>
+<body align="center">
+    <center>
+        @using (@Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+        <table class="tbl_input" cellpadding="4" cellspacing="0" width="400px">
+            <tr>
+                <th width="120px">&nbsp;</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="2" align="left">アカウント名およびパスワードを入力してください</th>
+            </tr>
+
+            <tr>
+                <td class="errMsg" colspan="2">
+                    @Html.ValidationMessage("Login_Fail")
+                    @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "errMsg" })
+                    <br/>
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "errMsg" })
+                </td>
+            </tr>
+            <tr align="left">
+                <td class="lbl_left">アカウント名:</td>
+                <td align="left">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "txBox", @onfocus = "this.style.borderColor='#0066ff'", @size = "20", @onblur = "this.style.borderColor='#aaaaaa';"
+               })
+                </td>
+            </tr>
+            <tr align="left">
+                <td class="lbl_left"></td>
+                <td align="left">
+                </td>
+            </tr>
+            <tr>
+                <td class="lbl_left">パスワード:</td>
+                <td align="left">
+                    @Html.PasswordFor(m => m.Password,new{@class="txBox", @type="password", @name="password", @value="" ,@size = "22",
+                   @onfocus = "this.style.borderColor='#0066ff';", @onblur = "this.style.borderColor='#aaaaaa';" })
+                </td>
+            </tr>
+            <tr>
+                <td class="lbl_left"></td>
+                <td align="left">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="left">
+                    <input class="btn btn_wider" type="submit" value="ログイン" />
+                </td>
+            </tr>
+        </table>
+        }
+    </center>
+</body>
+</html>

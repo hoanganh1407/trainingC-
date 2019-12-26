@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Confirm";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using TrainingMVCManagerUser.Models;
+@model UserModel
+<!-- Begin vung input-->
+<table class="tbl_input" border="0" width="75%" cellpadding="0" cellspacing="0">
+    <tr>
+        <th align="left">
+            <div style="padding-left:100px;">
+                情報確認<br>
+                入力された情報をＯＫボタンクリックでＤＢへ保存してください
+            </div>
+            <div style="padding-left:100px;">&nbsp;</div>
+        </th>
+    </tr>
+    <tr>
+        <td align="left">
+            <div style="padding-left:100px;">
+                <table border="1" width="70%" class="tbl_input" cellpadding="4" cellspacing="0">
+                    <tr>
+                        <td class="lbl_left">アカウント名:</td>
+                        <td align="left">@Model.LoginUser</td>
+                    </tr>
+                    <tr>
+                        <td class="lbl_left">グループ:</td>
+                        <td align="left">
+                            <label>
+                                @Model.GroupName
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl_left">氏名:</td>
+                        <td align="left">@Model.FullName</td>
+                    </tr>
+                    <tr>
+                        <td class="lbl_left">カタカナ氏名:</td>
+                        @{ 
+                            if ("NY".Equals(Model.NameKana))
+                            {
+                                Model.NameKana = null;
+                            }
+                        <td align="left">@Model.NameKana</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="lbl_left">生年月日:</td>
+                        <td align="left">@Model.BirtDay.ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td class="lbl_left">メールアドレス:</td>
+                        <td align="left">@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td class="lbl_left">電話番号:</td>
+                        <td align="left">@Model.Tel</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><a href="#" onclick="DisplayOrHide()">日本語能力</a></th>
+                    </tr>
+                </table>
+                <div id="divLevelJP" style="display:none">
+                    <table border="1" width="70%" class="tbl_input" cellpadding="4" cellspacing="0">
+                        <tr>
+                            <td class="lbl_left">資格:</td>
+                            @{
+                                if (!"0".Equals(Model.NameLevel))
+                                {
+                                    <td align="left">@Model.NameLevel</td>
+
+                                }
+                                else
+                                {
+                                    <td align="left"></td>
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">資格交付日:</td>
+                            @{
+                                if (!"0".Equals(Model.NameLevel))
+                                {
+                                    <td align="left">@Model.StartDate.ToShortDateString()</td>
+                                }
+                                else
+                                {
+                                    <td align="left"></td>
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">失効日:</td>
+                            @{
+                                if (!"0".Equals(Model.NameLevel))
+                                {
+                                    <td align="left">@Model.EndDate.ToShortDateString()</td>
+                                }
+                                else
+                                {
+                                    <td align="left"></td>
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">点数:</td>
+                            @{
+                                if (!"0".Equals(Model.NameLevel))
+                                {
+                                    <td align="left">@Model.Total</td>
+                                }
+                                else
+                                {
+                                    <td align="left"></td>
+                                }
+                            }
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<div style="padding-left:100px;">&nbsp;</div>
+<!-- Begin vung button -->
+<div style="padding-left:45px;">
+    <table border="0" cellpadding="4" cellspacing="0" width="300px">
+        <tr>
+            <th width="200px" align="center">&nbsp;</th>
+            <td>
+                <input class="btn" type="button" onclick="ConfirmInsert()" value="OK" />
+            </td>
+            <td>
+                <input class="btn" type="button" onclick="Edit()" value="戻る" />
+            </td>
+        </tr>
+    </table>
+</div>
+<form asp-controller="Confirm" asp-action="Confirm" method="post" id="userForm">
+    @Html.HiddenFor(model => model.BirtDay)
+    @Html.HiddenFor(model => model.Email)
+    @Html.HiddenFor(model => model.EndDate)
+    @Html.HiddenFor(model => model.FullName)
+    @Html.HiddenFor(model => model.GroupID)
+    @Html.HiddenFor(model => model.GroupName)
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.LoginUser)
+    @Html.HiddenFor(model => model.NameKana)
+    @Html.HiddenFor(model => model.NameLevel)
+    @Html.HiddenFor(model => model.Password)
+    @Html.HiddenFor(model => model.PasswordConfirm)
+    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model => model.Tel)
+    @Html.HiddenFor(model => model.Total)
+</form>
+<form action="@Url.Action("InsertUser", "Insert")" method="post" id="userForm1">
+    @{
+        Model.IsEdit = true;
+    }
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.BirtDay)
+    @Html.HiddenFor(model => model.Email)
+    @Html.HiddenFor(model => model.EndDate)
+    @Html.HiddenFor(model => model.FullName)
+    @Html.HiddenFor(model => model.GroupID)
+    @Html.HiddenFor(model => model.GroupName)
+    @Html.HiddenFor(model => model.LoginUser)
+    @Html.HiddenFor(model => model.NameKana)
+    @Html.HiddenFor(model => model.NameLevel)
+    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model => model.Tel)
+    @Html.HiddenFor(model => model.Total)
+    @Html.HiddenFor(model => model.IsEdit)
+</form>
+<!-- End vung button -->
+<!-- End vung input -->

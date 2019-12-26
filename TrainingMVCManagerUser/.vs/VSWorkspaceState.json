@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Model",
+    "\\Model\\dao",
+    "\\TrainingMVCManagerUser",
+    "\\TrainingMVCManagerUser\\Areas",
+    "\\TrainingMVCManagerUser\\Areas\\Admin",
+    "\\TrainingMVCManagerUser\\Areas\\Admin\\Controllers",
+    "\\TrainingMVCManagerUser\\Areas\\Admin\\Models",
+    "\\TrainingMVCManagerUser\\Common",
+    "\\TrainingMVCManagerUser\\Constant",
+    "\\TrainingMVCManagerUser\\Views",
+    "\\TrainingMVCManagerUser\\Views\\ListUser"
+  ],
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Concept/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/Concept/js/ListUser.js"></script>
+</head>
+<body>
+    <!-- Begin vung header -->
+    <div>
+        <div>
+            <table>
+                <tr>
+                    <td width="80%"><img src="~/Concept/images/logo-manager-user.gif" alt="Luvina" />
+                    <td>
+                    <td align="left"><a href="../LogOut/Index">ログアウト</a> &nbsp; <a href="../ListUser/ADM002">トップ</a>
+                    <td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @RenderBody()
+    <!-- Begin vung footer -->
+    <div class="lbl_footer">
+        <br><br><br><br>
+        Copyright ©　2010　ルビナソフトウエア株式会社. All rights reserved.
+    </div>
+    <!-- End vung footer -->
+</body>
+</html>

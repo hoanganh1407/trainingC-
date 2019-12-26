@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "InsertUser";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using TrainingMVCManagerUser.Models;
+@using Model.EF;
+@{
+    SelectList listGroup = ViewBag.listGroup;
+    SelectList listYear = ViewBag.listYear;
+    SelectList listMonth = ViewBag.listMonth;
+    SelectList listDay = ViewBag.listDay;
+    SelectList listLevel = ViewBag.listLevel;
+    List<string> listMessages = ViewBag.messages;
+}
+@model UserModel
+<!-- Begin vung input-->
+<form asp-controller="Insert" asp-action="InsertUser" id="form-user" method="post">
+    @{
+        if (Model != null && Model.ID != 0)
+        {
+            @Html.HiddenFor(m => m.ID)
+        }
+    }
+    <table class="tbl_input" border="0" width="75%" cellpadding="0" cellspacing="0">
+        <tr>
+            <th align="left">
+                <div style="padding-left:100px;">
+                    会員情報編集
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td class="errMsg">
+                <div style="padding-left:120px">
+
+                    @if (listMessages != null && listMessages.Any())
+                    {
+                        foreach (var error in listMessages)
+                        {
+                            @error<br>
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                <div style="padding-left:100px;">
+                    <table border="0" width="100%" class="tbl_input" cellpadding="4" cellspacing="0">
+                        <tr>
+                            <td class="lbl_left"><font color="red">*</font> アカウント名:</td>
+                            @{
+                                if (Model != null && Model.ID != 0)
+                                {
+                                    <td align="left">
+                                        @Html.TextBoxFor(s => s.LoginUser, new {@class="txBox" ,@type = "text", @name = "id" ,@value = "",
+                                       @size = "15", @onfocus = "this.style.borderColor='#0066ff';",
+                                       @onblur = "this.style.borderColor='#aaaaaa';",
+                                       @readonly = true
+                                   })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="left">
+                                        @Html.TextBoxFor(s => s.LoginUser, new {@class="txBox" ,@type = "text", @name = "id" ,@value = "",
+                                       @size = "15", @onfocus = "this.style.borderColor='#0066ff';",
+                                       @onblur = "this.style.borderColor='#aaaaaa';"})
+                                    </td>
+                                }
+                            }
+
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"><font color="red">*</font> グループ:</td>
+                            <td align="left">
+                                @Html.DropDownListFor(m => m.GroupID, new SelectList(@listGroup, "Value", "Text"))
+                                <span>&nbsp;&nbsp;&nbsp;</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"><font color="red">*</font> 氏名:</td>
+                            <td align="left">
+                                @Html.TextBoxFor(s => s.FullName, new {@class="txBox" ,@type = "text", @name = "name",@value = "",
+                                 @size = "30", @onfocus = "this.style.borderColor='#0066ff';",
+                                 @onblur = "this.style.borderColor='#aaaaaa';" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">カタカナ氏名:</td>
+                            <td align="left">
+                                @{
+                                    if (Model !=null && "NY".Equals(Model.NameKana))
+                                    {
+                                        Model.NameKana = null;
+                                    }
+                                }
+                                @Html.TextBoxFor(s => s.NameKana, new {@class="txBox" ,@type = "text", @name = "name",@value = "",
+                                 @size = "30", @onfocus = "this.style.borderColor='#0066ff';",
+                                 @onblur = "this.style.borderColor='#aaaaaa';" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"><font color="red">*</font> 生年月日:</td>
+                            <td align="left">
+                                @Html.DropDownListFor(m => m.BirtDayYear, new SelectList(listYear, "Value", "Text"))
+                                <label>年</label>
+                                @Html.DropDownListFor(m => m.BirtDayMonth, new SelectList(listMonth, "Value", "Text"))
+                                <label>月</label>
+                                @Html.DropDownListFor(m => m.BirtDayDay, new SelectList(listDay, "Value", "Text"))
+                                <label>日</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"><font color="red">*</font> メールアドレス:</td>
+                            <td align="left">
+                                @Html.TextBoxFor(s => s.Email, new {@class="txBox" ,@type = "text", @name = "email",@value = "",
+                                 @size = "30", @onfocus = "this.style.borderColor='#0066ff';",
+                                 @onblur = "this.style.borderColor='#aaaaaa';" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"><font color="red">*</font>電話番号:</td>
+                            <td align="left">
+                                @Html.TextBoxFor(s => s.Tel, new {@class="txBox" ,@type = "text", @name = "tel",@value = "",
+                                 @size = "30", @onfocus = "this.style.borderColor='#0066ff';",
+                                 @onblur = "this.style.borderColor='#aaaaaa';" })
+                            </td>
+                        </tr>
+                        @{
+                            if (Model == null || Model.ID == 0)
+                            {
+                                <tr>
+                                    <td class="lbl_left"><font color="red">*</font> パスワード:</td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(s => s.Password, new {@class="txBox" ,@type = "password", @name = "password",@value = "",
+                                         @size = "30", @onfocus = "this.style.borderColor='#0066ff';",
+                                         @onblur = "this.style.borderColor='#aaaaaa';" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="lbl_left">パスワード（確認）:</td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(s => s.PasswordConfirm, new {@class="txBox" ,@type = "password", @name = "password",@value = "",
+                                         @size = "30", @onfocus = "this.style.borderColor='#0066ff';",
+                                         @onblur = "this.style.borderColor='#aaaaaa';" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <th align="left" colspan="2">
+                                <a href="#" onclick="DisplayOrHide()">日本語能力</a>
+                            </th>
+                        </tr>
+                    </table>
+                    <div id="divLevelJP" style="display:none">
+                        <table border="0" width="100%" class="tbl_input" cellpadding="4" cellspacing="0">
+                            <tr>
+                                <td class="lbl_left">資格:</td>
+                                <td align="left">
+                                    @Html.DropDownListFor(m => m.NameLevel, new SelectList(listLevel, "Value", "Text"))
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl_left">資格交付日: </td>
+                                <td align="left">
+                                    @Html.DropDownListFor(m => m.StartDateYear, new SelectList(listYear, "Value", "Text"))
+                                    <label>年</label>
+                                    @Html.DropDownListFor(m => m.StartDateMonth, new SelectList(listMonth, "Value", "Text"))
+                                    <label>月</label>
+                                    @Html.DropDownListFor(m => m.StartDateDay, new SelectList(listDay, "Value", "Text"))
+                                    <label>日</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl_left">失効日: </td>
+                                <td align="left">
+                                    @Html.DropDownListFor(m => m.EndDateYear, new SelectList(listYear, "Value", "Text"))
+                                    <label>年</label>
+                                    @Html.DropDownListFor(m => m.EndDateMonth, new SelectList(listMonth, "Value", "Text"))
+                                    <label>月</label>
+                                    @Html.DropDownListFor(m => m.EndDateDay, new SelectList(listDay, "Value", "Text"))
+                                    <label>日</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl_left">点数: </td>
+                                <td align="left">
+                                    @Html.TextBoxFor(s => s.Total, "{0:#.#}", new {@class="txBox" ,@type = "text", @name = "total",@value = "",
+                                   @size = "5", @onfocus = "this.style.borderColor='#0066ff';",
+                                   @onblur = "this.style.borderColor='#aaaaaa';" })
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="padding-left:100px;">&nbsp;</div>
+    <!-- Begin vung button -->
+    <div style="padding-left:45px;">
+        <table border="0" cellpadding="4" cellspacing="0" width="300px">
+            <tr>
+                <th width="200px" align="center">&nbsp;</th>
+                <td>
+                    <input class="btn" type="submit" value="確認" />
+                </td>
+                <td>
+                    @{
+                        if (Model != null && Model.ID != 0)
+                        {
+                            <input class="btn" type="button" onclick="ShowUser(@Model.ID)" value="戻る" />
+                        }
+                        else
+                        {
+                            <input class="btn" type="button" onclick="BackADM002()" value="戻る" />
+                        }
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- End vung button -->
+</form>
+<!-- End vung input -->

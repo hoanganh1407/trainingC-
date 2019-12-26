@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "ADM002";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@using TrainingMVCManagerUser.Models;
+@model  List<TrainingMVCManagerUser.Models.UserModel>
+@{
+    List<GroupModel> listGroup = ViewBag.listGroup;
+}
+
+<!-- End vung header -->
+<!-- Begin vung dieu kien tim kiem -->
+<form action="" method="post" name="mainform">
+    <table class="tbl_input" border="0" width="90%" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    会員名称で会員を検索します。検索条件無しの場合は全て表示されます。
+                </td>
+            </tr>
+            <tr>
+                <td width="100%">
+                    <table class="tbl_input" cellpadding="4" cellspacing="0">
+                        <tbody>
+                            @{ var name = ViewBag.fullName;
+                                <tr>
+                                    <td class="lbl_left">氏名:</td>
+                                    <td align="left">
+                                        <input id="fullNameSearch" value='@name' class="txBox" type="text" name="name"
+                                               size="20" onfocus="this.style.borderColor='#0066ff';"
+                                               onblur="this.style.borderColor='#aaaaaa';" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="lbl_left">グループ:</td>
+                                    <td align="left" width="80px">
+                                        <select id="groupIDSearch" name="group_id">
+                                            <option value="0">全て</option>
+                                            @{
+                                                foreach (var group in listGroup)
+                                                {
+                                                    if (group.GroupId == ViewBag.groupId)
+                                                    {
+                                                        <option value="@group.GroupId" selected>
+                                                            @group.groupName
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@group.GroupId">
+                                                            @group.groupName
+                                                        </option>
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                    </td>
+                                    <td align="left">
+                                        <input class="btn" type="button" value="検索" onclick="Search()">
+                                        <input class="btn" type="button" title="Delete" value="新規追加" onclick="AddUser()" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- End vung dieu kien tim kiem -->
+</form>
+<!-- Begin vung hien thi danh sach user -->
+@if (ViewBag.totalRecord != 0)
+{
+
+    <table class="tbl_list" border="1" cellpadding="4" cellspacing="0" width="80%">
+
+        <tbody>
+            <tr class="tr2">
+                <th align="center" width="20px">
+                    ID
+                </th>
+                <th align="left">
+                    氏名 @{if ("ASC".Equals(ViewBag.sortFullName))
+                        {
+                            <a href="#" onclick="Sort('DES', 'sortFullName')">▲▽</a>
+                        }
+                        else
+                        {
+                            <a href="#" onclick="Sort('ASC', 'sortFullName')">△▼</a>
+                        }
+                    }
+                </th>
+                <th align="left">
+                    生年月日
+                </th>
+                <th align="left">
+                    グループ
+                </th>
+                <th align="left">
+                    メールアドレス
+                </th>
+                <th align="left" width="70px">
+                    電話番号
+                </th>
+                <th align="left">
+                    日本語能力 @{if ("ASC".Equals(ViewBag.sortNameLevel))
+                        {
+                            <a href="#" onclick="Sort('DES', 'sortNameLevel')">▲▽</a>
+                        }
+                        else
+                        {
+                            <a href="#" onclick="Sort('ASC', 'sortNameLevel')">△▼</a>
+                        }
+                    }
+                </th>
+                <th align="left">
+                    失効日 @{if ("ASC".Equals(ViewBag.sortStartDate))
+                        {
+                            <a href="#" onclick="Sort('DES', 'sortStartDate')">▲▽</a>
+                        }
+                        else
+                        {
+                            <a href="#" onclick="Sort('ASC', 'sortStartDate')">△▼</a>
+                        }
+                    }
+                </th>
+                <th align="left">
+                    点数
+                </th>
+            </tr>
+            @foreach (var user in Model)
+            {
+
+                <tr>
+                    <td align="right">
+                        <a href="#" onclick="ShowUser(@user.ID)">@user.ID</a>
+                    </td>
+                    <td>
+                        @user.FullName
+                    </td>
+                    <td align="center">
+                        @user.BirtDay.ToShortDateString()
+                    </td>
+                    <td>
+                        @user.GroupName
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+                    <td>
+                        @user.Tel
+                    </td>
+                    <td>
+                        @user.NameLevel
+                    </td>
+                    <td align="center">
+                        @user.StartDate.ToShortDateString()
+                    </td>
+                    <td align="right">
+                        @user.Total
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- End vung hien thi danh sach user -->
+}
+else
+{
+    <label>検索条件に該当するユーザが見つかりません。</label>
+}<!-- Begin vung paging -->
+<table>
+    <tbody>
+        <tr>
+            <td class="lbl_paging">
+                @if (!ViewBag.isStart)
+                {
+                    <a href="#" onclick="NextOrBack(@ViewBag.currentPage, 'back')">&lt;&lt;</a>
+                }
+                @for (int i = ViewBag.startPage; i <= ViewBag.endPage; i++)
+                {
+                    if (ViewBag.startPage == ViewBag.endPage)
+                    {
+                    }
+                    else if (i == ViewBag.currentPage)
+                    {
+                        <a>@i</a>
+                    }
+                    else
+                    {
+                        <a href="#" onclick="Paging(@i)">@i</a>
+                    }
+                }
+                @if (!ViewBag.isEnd)
+                {
+                    <a href="#" onclick="NextOrBack(@ViewBag.currentPage, 'next')">&gt;&gt;</a>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- End vung paging -->

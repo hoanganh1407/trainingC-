@@ -1,0 +1,11 @@
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\Model.dll.config
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\Model.dll
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\Model.pdb
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\EntityFramework.dll
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\EntityFramework.xml
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\obj\Release\Model.csproj.CoreCompileInputs.cache
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\obj\Release\Model.csproj.CopyComplete
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\obj\Release\Model.dll
+C:\Users\nguyenhoanganh3\source\repos\TrainingMVCManagerUser\Model\obj\Release\Model.pdb
